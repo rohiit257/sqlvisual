@@ -64,7 +64,41 @@ The Docker Compose setup mounts `frontend/` and `backend/` into their containers
 
 ## Backend Notes
 
-The FastAPI app uses a factory pattern in `backend/app/main.py`, settings via `pydantic-settings`, versioned API routing, and async SQLAlchemy session wiring. The `SQLAssistantService` is intentionally a seam for future LangChain-backed workflows.
+The FastAPI app uses a factory pattern in `backend/app/main.py`, settings via `pydantic-settings`, versioned API routing, async SQLAlchemy session wiring, Redis management, structured trace-aware logging, and global exception handling.
+
+### LangChain SQL Agent
+
+Set `GROQ_API_KEY` in `.env` to enable the SQL analytics agent.
+
+Endpoints:
+
+```bash
+POST /api/v1/analytics/query
+POST /api/v1/analytics/query/stream
+```
+
+Request body:
+
+```json
+{
+  "question": "Which product categories drove the most revenue?",
+  "model": "llama-3.3-70b-versatile"
+}
+```
+
+The non-streaming endpoint returns:
+
+```json
+{
+  "answer": "...",
+  "sql": "...",
+  "rows": [],
+  "execution_time": 1.23,
+  "trace_id": "..."
+}
+```
+
+Supported Groq models are `llama-3.3-70b-versatile` and `deepseek-r1-distill-llama-70b`. The streaming endpoint is Server-Sent Events compatible and emits `start`, token/tool events, `final`, or `error`.
 
 ## Frontend Notes
 

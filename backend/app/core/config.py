@@ -39,6 +39,20 @@ class Settings(BaseSettings):
     request_trace_header: str = "x-request-id"
     request_timeout_seconds: int = 60
 
+    groq_api_key: str | None = None
+    groq_model: str = "llama-3.3-70b-versatile"
+    groq_temperature: float = 0
+    groq_max_retries: int = 2
+    sql_agent_top_k: int = 20
+    sql_agent_max_iterations: int = 12
+    sql_agent_max_execution_time: int = 45
+    sql_agent_schema: str = "analytics"
+    sql_agent_include_tables: str = (
+        "order_line_revenue,monthly_sales_summary_view,schema_metadata,sample_queries"
+    )
+    sql_agent_sample_rows: int = 3
+    sql_agent_streaming: bool = True
+
     @computed_field
     @property
     def cors_origins(self) -> list[str]:
@@ -53,6 +67,20 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.environment == "production"
+
+    @computed_field
+    @property
+    def sync_database_url(self) -> str:
+        return self.database_url.replace("postgresql+asyncpg://", "postgresql+psycopg://")
+
+    @computed_field
+    @property
+    def sql_agent_tables(self) -> list[str]:
+        return [
+            table.strip()
+            for table in self.sql_agent_include_tables.split(",")
+            if table.strip()
+        ]
 
     @model_validator(mode="after")
     def enforce_production_safety(self) -> "Settings":

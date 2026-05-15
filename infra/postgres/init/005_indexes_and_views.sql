@@ -78,6 +78,16 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_monthly_sales_summary_unique
 CREATE INDEX IF NOT EXISTS idx_monthly_sales_summary_revenue
     ON analytics.monthly_sales_summary (net_revenue DESC);
 
+CREATE OR REPLACE VIEW analytics.monthly_sales_summary_view AS
+SELECT
+    sales_month,
+    category_name,
+    customer_country,
+    order_count,
+    units_sold,
+    net_revenue
+FROM analytics.monthly_sales_summary;
+
 CREATE OR REPLACE FUNCTION analytics.refresh_monthly_sales_summary()
 RETURNS VOID
 LANGUAGE plpgsql
@@ -95,4 +105,3 @@ ANALYZE northwind.shippers;
 ANALYZE northwind.products;
 ANALYZE northwind.orders;
 ANALYZE northwind.order_details;
-
