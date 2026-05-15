@@ -35,8 +35,34 @@
 
 .dashboard-grid {
   background:
-    radial-gradient(circle at top left, hsl(var(--primary) / 0.18), transparent 28rem),
-    radial-gradient(circle at bottom right, hsl(var(--accent) / 0.14), transparent 26rem),
-    linear-gradient(135deg, hsl(222 47% 5%), hsl(221 39% 8%));
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    radial-gradient(circle at top left, hsl(var(--primary) / 0.2), transparent 30rem),
+    radial-gradient(circle at bottom right, hsl(var(--accent) / 0.13), transparent 28rem),
+    linear-gradient(135deg, hsl(224 56% 4%), hsl(220 44% 7%) 48%, hsl(222 48% 5%));
+  background-size:
+    44px 44px,
+    44px 44px,
+    auto,
+    auto,
+    auto;
 }
 
+.scrollbar-premium {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(103, 232, 249, 0.35) rgba(15, 23, 42, 0.4);
+}
+
+.scrollbar-premium::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.scrollbar-premium::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.scrollbar-premium::-webkit-scrollbar-thumb {
+  background: rgba(103, 232, 249, 0.35);
+  border-radius: 999px;
+}

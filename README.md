@@ -72,5 +72,4 @@ The Next.js app uses the app router, Tailwind CSS variables compatible with shad
 
 ## Database
 
-PostgreSQL initialization scripts live in `infra/postgres/init`. The first script creates an `analytics` schema and a starter `query_runs` table for future AI-generated SQL workflows.
-
+PostgreSQL initialization scripts live in `infra/postgres/init`. They create the `analytics` and `northwind` schemas, import a Northwind sample dataset, add query logging and schema metadata tables, and build analytics indexes/views. See `docs/database.md` for the ERD, tuning notes, and sample query catalog.

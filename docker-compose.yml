@@ -3,6 +3,26 @@ services:
     image: postgres:16-alpine
     container_name: sqlvisual-postgres
     restart: unless-stopped
+    command:
+      - postgres
+      - -c
+      - shared_preload_libraries=pg_stat_statements
+      - -c
+      - max_connections=100
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - effective_cache_size=768MB
+      - -c
+      - work_mem=16MB
+      - -c
+      - maintenance_work_mem=128MB
+      - -c
+      - wal_compression=on
+      - -c
+      - random_page_cost=1.1
+      - -c
+      - effective_io_concurrency=200
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-sqlvisual}
       POSTGRES_USER: ${POSTGRES_USER:-sqlvisual}

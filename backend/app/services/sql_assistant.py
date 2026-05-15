@@ -4,3 +4,6 @@ class SQLAssistantService:
     async def generate_sql(self, prompt: str) -> str:
         raise NotImplementedError("LangChain integration is not wired yet.")
 
+
+def get_sql_assistant_service() -> SQLAssistantService:
+    return SQLAssistantService()
